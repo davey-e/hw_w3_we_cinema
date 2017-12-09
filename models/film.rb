@@ -29,6 +29,17 @@ class Film
     return result
   end
 
+  def customers()
+    sql = "SELECT customers.* FROM customers
+    INNER JOIN tickets
+    ON customers.id = tickets.customer_id
+    WHERE tickets.film_id = $1;"
+    values = [@id]
+    customer_hashes = SqlRunner.run(sql, values)
+    customers = customer_hashes.map{|customer| Customer.new(customer)}
+    return customers
+  end
+
   #Update
   def update()
     sql= "UPDATE films SET (title, price) = ($1, $2)
