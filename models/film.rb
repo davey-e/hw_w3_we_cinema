@@ -27,5 +27,9 @@ class Film
     return result
   end
 
+  def Film.delete_all()
+    sql = "DELETE from films"
+    SqlRunner.run(sql)
+  end
 
 end
