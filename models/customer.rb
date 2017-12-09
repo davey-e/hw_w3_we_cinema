@@ -11,6 +11,7 @@ class Customer
     @funds = options['funds'].to_i
   end
 
+  #Create
   def save()
     sql = "INSERT INTO customers (name, funds)
     VALUES($1, $2)
@@ -20,6 +21,7 @@ class Customer
     @id = customer['id'].to_i
   end
 
+  #Read
   def Customer.select_all()
     sql = "SELECT * from customers"
     customers = SqlRunner.run(sql)
@@ -27,6 +29,15 @@ class Customer
     return result
   end
 
+  #Update
+  def update()
+    sql= "UPDATE customers SET (name, funds) = ($1, $2)
+    WHERE id = $3"
+    values=[@name, @funds, @id]
+    SqlRunner.run(sql, values)
+  end
+
+  #Delete
   def Customer.delete_all()
     sql = "DELETE from customers"
     SqlRunner.run(sql)

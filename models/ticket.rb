@@ -11,6 +11,7 @@ class Ticket
     @film_id = options['film_id'].to_i
   end
 
+  #Create
   def save()
     sql = "INSERT INTO tickets(customer_id, film_id)
     VALUES ($1, $2)
@@ -20,6 +21,7 @@ class Ticket
     @id = ticket['id'].to_i
   end
 
+  #Read
   def Ticket.select_all()
     sql = "SELECT * from tickets"
     tickets = SqlRunner.run(sql)
@@ -27,6 +29,15 @@ class Ticket
     return result
   end
 
+  #Update
+  def update()
+    sql= "UPDATE tickets SET (customer_id, film_id) = ($1, $2)
+    WHERE id = $3"
+    values=[@customer_id, @film_id, @id]
+    SqlRunner.run(sql, values)
+  end
+
+  #Delete
   def Ticket.delete_all()
     sql = "DELETE from tickets"
     SqlRunner.run(sql)
