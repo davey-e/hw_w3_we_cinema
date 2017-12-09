@@ -29,6 +29,14 @@ class Customer
     return result
   end
 
+  def Customer.find_by_id(search_id)
+    sql = "SELECT * FROM customers
+    WHERE id = $1"
+    values = [search_id]
+    customer_hash = SqlRunner.run(sql,values).first()
+    return customer = Customer.new(customer_hash)
+  end
+
   def films()
     sql = "SELECT films.* FROM films
     INNER JOIN tickets

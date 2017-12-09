@@ -1,4 +1,6 @@
 require_relative('../db/sql_runner.rb')
+require_relative('./film.rb')
+require_relative('./customer.rb')
 
 class Ticket
 
@@ -19,6 +21,10 @@ class Ticket
     values = [@customer_id, @film_id]
     ticket = SqlRunner.run(sql, values).first
     @id = ticket['id'].to_i
+    film_price = Film.find_by_id(@film_id).price
+    customer = Customer.find_by_id(@customer_id)
+    customer.funds -= film_price
+    customer.update()
   end
 
   #Read

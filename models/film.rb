@@ -29,6 +29,14 @@ class Film
     return result
   end
 
+  def Film.find_by_id(search_id)
+    sql = "SELECT * FROM films
+    WHERE id = $1"
+    values = [search_id]
+    film_hash = SqlRunner.run(sql,values).first()
+    return film = Film.new(film_hash)
+  end
+
   def customers()
     sql = "SELECT customers.* FROM customers
     INNER JOIN tickets
