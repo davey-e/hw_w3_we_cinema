@@ -21,5 +21,34 @@ class Screening
     @id = screening['id'].to_i
   end
 
+  #Read
+  def Screening.select_all()
+    sql = "SELECT * from screenings"
+    screenings = SqlRunner.run(sql)
+    result = screenings.map{|screening| Screening.new(screening)}
+    return result
+  end
+
+  #Update
+  def update()
+    sql= "UPDATE screenings SET (film_id, screening_time) = ($1, $2)
+    WHERE id = $3"
+    values=[@film_id, @screening_time, @id]
+    SqlRunner.run(sql, values)
+  end
+
+  #Delete
+  def Screening.delete_all()
+    sql = "DELETE from screenings"
+    SqlRunner.run(sql)
+  end
+
+  def delete()
+    sql = "DELETE FROM screenings
+    WHERE id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+
 
 end
