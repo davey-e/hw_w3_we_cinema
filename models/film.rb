@@ -48,6 +48,17 @@ class Film
     return customers
   end
 
+  def customer_count()
+    #I've made the assumption that a customer can buy more than one ticket for a film
+    #so this is really more of a ticket count rather than a customer count
+    #If it was a cutomer count I would need to use SELECT DISTINCT
+    sql = "SELECT count(*) FROM tickets
+    WHERE film_id = $1";
+    values = [@id]
+    customer_count = SqlRunner.run(sql, values).first()
+    return customer_count['count'].to_i
+  end
+
   #Update
   def update()
     sql= "UPDATE films SET (title, price) = ($1, $2)
