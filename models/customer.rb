@@ -48,6 +48,14 @@ class Customer
     return films
   end
 
+  def ticket_count()
+    sql = "SELECT count(*) FROM tickets
+    WHERE customer_id = $1";
+    values = [@id]
+    ticket_count = SqlRunner.run(sql, values).first()
+    return ticket_count['count'].to_i
+  end
+
   #Update
   def update()
     sql= "UPDATE customers SET (name, funds) = ($1, $2)
